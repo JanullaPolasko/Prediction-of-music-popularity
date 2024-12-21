@@ -13,7 +13,7 @@ Aby sme interpretov reprezentovali kvantitatívnou premennou namiesto kategórie
 Spojili sme oba datasety a obmedzili analýzu len na skladby interpretov z **top 3 000**. Po odstránení duplicít v stĺpci `track_id` (identifikátor pesničky) sme pracovali s **29 281 záznamami**. 
 
 Aby sme skladbu mohli označiť ako populárnu alebo nepopulárnu, rozhodli sme sa pracovať s hodnotou popularity ako **binárnou premennou**. Prahová hodnota bola stanovená na úrovni **75% kvantilu popularity (hodnota 53)**: Skladby s hodnotou popularity ≥ 53 sme označili za **populárne** (top 25%). Týmto sme pripravili základ pre klasifikačné metódy.
- ![Alt text](korelacia.png)
+ ![Alt text](popularity_hustota.png)
 
 ### Problémy v dátach
 Premenná **popularity** nie je rovnomerne rozdelená. Väčšina skladieb má nižšiu popularitu, čo môže viesť k tomu, že model sa viac prispôsobí skladbám s nižšou popularitou a bude mať problémy s identifikáciou skladieb s vyššou popularitou. Z tohto dôvodu sme pridali nový stĺpec klasifikujúci skladby ako **populárne** alebo **nepopulárne**.
@@ -22,7 +22,8 @@ Premenná **popularity** nie je rovnomerne rozdelená. Väčšina skladieb má n
 Pre analýzu korelácií sme zvolili **Spearmanovu koreláciu**, ktorá lepšie zachytáva nelineárne vzťahy. Výrazné korelácie sme pozorovali pri:
 - **Pozitívna korelácia**: `danceability`, `energy`, `loudness`, `artist_rank`.
 - **Negatívna korelácia**: `acousticness`, `instrumentalness`.
-  ![Alt text](popularity_hustota.png)
+  ![Alt text](korelacia.png)
+
 
 ---
 
