@@ -26,6 +26,7 @@ Premenná **popularity** nie je rovnomerne rozdelená. Väčšina skladieb má n
 Pre analýzu korelácií sme zvolili **Spearmanovu koreláciu**, ktorá lepšie zachytáva nelineárne vzťahy. Výrazné korelácie sme pozorovali pri:
 - **Pozitívna korelácia**: `danceability`, `energy`, `loudness`, `artist_rank`.
 - **Negatívna korelácia**: `acousticness`, `instrumentalness`.
+  ![Alt text](korelacia.png)
 
 Zamerali sme sa na premenné s výraznými koreláciami a skúmali ich vplyv na popularitu.
 
