@@ -107,12 +107,9 @@ Cieľom je vytvoriť model, ktorý dokáže spoľahlivo rozlíšiť medzi popul�
 
 Na základe širokého spektra hudobných atribútov, ako sú tanečnosť, energia a akustickosť, sme zvolili logistickú regresiu ako vhodný nástroj pre túto binárnu klasifikáciu. Logistická regresia umožňuje odhadnúť pravdepodobnosť, že daná pieseň patrí do kategórie populárnych.
 
----
-
 ### Úprava dát
 Pôvodný dataset bol značne nevyvážený v prospech triedy menej populárnych piesní. Aby sme zabránili zaujatosti modelu, použili sme techniku **SMOTE (Synthetic Minority Oversampling Technique)**. Táto metóda synteticky generuje nové príklady pre menšinovú triedu na základe existujúcich dát, čím sme zabezpečili rovnomerné zastúpenie oboch tried.
 
----
 
 ### Výsledky modelu
 
@@ -135,16 +132,12 @@ Model dosiahol prijateľnú celkovú presnosť (73 %), avšak detailnejšia anal
 - **Precision**: 55 %, teda niečo vyše polovice piesní označených ako „populárne“ je skutočne populárnych.
 - **Recall**: 75 %, čo znamená, že model dokáže identifikovať väčšinu populárnych piesní.
 
----
-
 ## Matica zámien (Confusion Matrix)
 
 |                 | Predikované menej populárne | Predikované populárne |
 |-----------------|-----------------------------|-----------------------|
 | **Nepopulárne** | 2907 (True Negatives)     | 1113 (False Positives) |
 | **Populárne**      | 467 (False Negatives)      | 1370 (True Positives)  |
-
----
 
 ### ROC krivka a AUC
 **ROC krivka** graficky zobrazuje vzťah medzi True Positive Rate (Recall) a False Positive Rate pri rôznych prahových hodnotách klasifikácie.
@@ -153,8 +146,6 @@ Model dosiahol prijateľnú celkovú presnosť (73 %), avšak detailnejšia anal
 - **AUC (plocha pod krivkou):** 0.81  
 Táto hodnota naznačuje veľmi dobrý výkon modelu pri rozlišovaní medzi populárnymi a menej populárnymi skladbami.
 
----
-
 ### Precision-Recall krivka
 **Precision-Recall krivka** ukazuje vzťah medzi presnosťou (precision) a úplnosťou (recall) pri rôznych prahoch klasifikácie.
 
@@ -162,21 +153,20 @@ Táto hodnota naznačuje veľmi dobrý výkon modelu pri rozlišovaní medzi pop
 - So zvyšovaním recall (snaha identifikovať viac populárnych piesní) dochádza k poklesu presnosti, pretože model začne nesprávne označovať niektoré piesne ako populárne.
 - **Priemerná presnosť (AP):** 0.60, čo naznačuje uspokojivý, ale nie výnimočný výkon modelu.
 ![Alt text](images/Recall_logregression.png)
----
 
 Výsledky modelu logistickej regresie s **ROC-AUC 0.81** a presnosťou **73 %** naznačujú solídny výkon, najmä pri klasifikácii menej populárnych piesní. Model dokáže identifikovať väčšinu populárnych piesní (vysoký recall), avšak nižšia presnosť naznačuje určité problémy pri správnom určení populárnych skladieb.
+
+---
 
 ## Rozhodovací strom
 
 V tejto implementácii sme použili klasifikačný rozhodovací strom na analýzu dát, pričom sme sa zamerali na optimalizáciu jeho výkonu pomocou prerezávania. Rozhodovacie stromy často trpia problémom pretrénovania, keďže model zachytáva šum v dátach. Preto sme  neskor aplikovali techniku prerezávania, ktorá umožňuje zjednodušenie modelu odstránením nepotrebných uzlov.
 
----
 
 ### Výsledky neprerezaného modelu
 
 Použili sme klasifikačný rozhodovací strom s maximálnou hĺbkou 10 a vyvážením tried pomocou parametra `class_weight='balanced'`. Ak by tento parameter nebol nastavený, model by predpokladal, že všetky triedy majú rovnakú váhu, bez ohľadu na ich početnosť v dátach. To znamená, že dominantná trieda by mala vyššiu prioritu a model by sa snažil minimalizovať chyby na početnejšej triede, čo by viedlo k tomu, že by zase ignoroval menej početne triedy.
 
----
 
 ### Trénovacie dáta
 | Metrika                          | Hodnota   |
@@ -191,7 +181,6 @@ Použili sme klasifikačný rozhodovací strom s maximálnou hĺbkou 10 a vyvá�
 - **F1-score pre triedu 1**: 0.66 – ukazuje, že model má slušný balans medzi presnosťou a citlivosťou pri predikcii populárnych skladieb.
 Celkový výkon modelu na dátach je slušný, no nie perfektný.
 
----
 
 ### Testovacie dáta
 | Metrika                          | Hodnota   |
@@ -205,7 +194,6 @@ Celkový výkon modelu na dátach je slušný, no nie perfektný.
 - **Celková presnosť**: 69.6 % – výkon modelu na testovacích dátach je primeraný, hoci hlavný dôraz je na triedu 1.
 - Relatívne nízka presnosť pre triedu 1 (51 % na tréningových a 46 % na testovacích dátach) signalizuje, že model často označuje nepopulárne skladby ako populárne, čo by mohlo byť zlepšené ďalším ladením.
 
----
 
 ### ROC-AUC krivka
 ![Alt text](images/ROC_tree.png)
@@ -216,7 +204,6 @@ Celkový výkon modelu na dátach je slušný, no nie perfektný.
 - Tréningová krivka je bližšie k hornému ľavému rohu, čo značí vyššiu citlivosť pri zachovaní nízkeho množstva falošne pozitívnych predikcií.
 - Testovacia krivka je podobná, no mierne posunutá nižšie – model na testovacích dátach niekedy generuje viac falošne pozitívnych predikcií.
 
----
 
 ### Tvar rozhodovacieho stromu
 ![Alt text](images/tree_show.png)
@@ -235,12 +222,10 @@ Tento graf zobrazuje závislosť medzi hodnotou `ccp_alpha` (parametra pre prere
 - Pri veľmi vysokých hodnotách alfa dochádza k underfittingu, keď je strom príliš zjednodušený a nedokáže zachytiť dôležité vzory v dátach.
 Zvolíme hodnotu `ccp_alpha` v rozsahu 0.01 - 0.03, kde model dosahuje najlepšiu rovnováhu medzi presnosťou na tréningových a testovacích dátach.
 
----
 
 ### Vizualizácia optimálneho zrezaného stromu
 ![Alt text](images/tree_shownew.png)
 - Prerezaný strom neobsahuje nepodstatné vetvy a je menej komplexný. Výsledkom je model, ktorý je ľahšie interpretovateľný.
----
 
 ### ROC-AUC orezaný strom
 ![Alt text](images/ROC_treeneww.png)
@@ -289,6 +274,8 @@ Na zlepšenie výkonu modelu by bolo vhodné napríklad pridanie nových premenn
 | **R-squared (R²)**             | 0.50     | 1.00         |
 | **Accuracy within ±5**         | 25.95%   | 99.60%       |
 
+---
+
 ## KNN Klasifikácia
 
 V druhom prístupe vyhodnocovania popularity pomocou KNN sme zvolili klasifikačný model. Tento model predikuje popularitu skladieb ako binárnu hodnotu, kde skladba buď patrí do top 25% (populárne), alebo nie (nepopulárne).
@@ -298,7 +285,6 @@ V tomto prístupe sme tiež použili:
 - **StandardScaler** na škálovanie dát.
 - **GridSearchCV** na optimalizáciu hyperparametrov. Parametre sme optimalizovali dvomi spôsobmi: raz pre **accuracy** a raz pre **recall**.
 
----
 
 ### Výsledky
 
@@ -314,7 +300,6 @@ Model zameraný na **recall** dosiahol:
 - **F1 skóre**: 52.62%
 Aj keď bol tento model optimalizovaný na recall, výsledky sú len mierne lepšie pri zachytávaní populárnych skladieb. Model stále nevykazuje výrazné zlepšenie oproti modelu optimalizovanému na presnosť.
 
----
 
 ### Porovnanie Metód
 
@@ -328,11 +313,11 @@ Aj keď bol tento model optimalizovaný na recall, výsledky sú len mierne lep�
 | **ROC AUC Score**       | 0.83                                  | 0.79                                 |
 | **Confusion Matrix**    | `[[3848, 452], [800, 757]]`            | `[[3689, 611], [783, 774]]`          |
 
----
 ![Alt text](images/KNN_roc.png)
 ### Zhodnotenie
 Hodnota **AUC = 0.83** znamená, že pravdepodobnosť správnej klasifikácie pozitívneho a negatívneho príkladu je 83 %. To poukazuje na dobrú schopnosť modelu rozlišovať medzi triedami, no stále existuje priestor na zlepšenie.
 
+---
 
 # Porovnanie a Výsledky
 
@@ -376,8 +361,10 @@ Celkovo najvyššiu accuracy a precision dosiahol model KNN. Napriek tomu však 
 ### Nevýhody:
 - Zjednodušovanie problému (strata informácií)
 
-# Odpoved na hlavne otazky
 ---
+
+# Odpoved na hlavne otazky
+
 
 1. **Závisí popularita od interpreta?**
 
