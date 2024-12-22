@@ -260,6 +260,54 @@ Krivky ROC pre tréningové a testovacie dáta sú podobné. Prerezaný model si
 - Prerezanie stromu znížilo citlivosť (recall) pre populárne skladby, ale zlepšilo presnosť a generalizáciu.
 
 ---
+
+## KNN Regresia
+
+V tejto časti sme použili regresný model K-Nearest Neighbors (KNN) na predikciu popularity skladieb. Začali sme tým, že sme z datasetu odstránili nepotrebné stĺpce, ako sú názvy interpretov, ID skladieb a binarizovanú popularitu.
+
+Pre lepšie výsledky predikcie sme využili nasledujúce metódy:
+
+*   **StandardScaler** - Škálovanie číselných premenných, aby sme zabezpečili rovnakú váhu všetkých vstupných premenných. Obzvlášť dôležité pri KNN, kde vzdialenosti medzi bodmi zohrávajú kľúčovú úlohu.
+*   **PCA** - Redukcia rozmerov dát, aby sme udržali 95 % pôvodného rozptylu dát. Tento krok pomohol znížiť počet vstupných premenných a zároveň zlepšil výpočtovú efektivitu modelu bez výraznej straty informácií.
+*   **GridSearchCV** - Optimalizácia hyperparametrov modelu s 5-násobnou krížovou validáciou. Hľadali sme najlepšie hodnoty pre počet susedov a váhovú funkciu.
+
+### Výsledky
+KNN regresný model dosiahol najlepší výsledok pri hodnote `n_neighbors = 30`. Konkrétne dosiahol **MSE = 261,81** a **R² = 0,50**, čo znamená, že model dokáže vysvetliť 50 % variability v dátach. Iba 25,95 % predikcií sa nachádzalo v tolerancii ±5 od skutočných hodnôt, čo naznačuje, že model má priestor na zlepšenie presnosti predikcií. V porovnaní s lineárnou regresiou dosiahol KNN veľmi podobné výsledky.
+
+Pri porovnaní výkonu na tréningovej a testovacej sade vidíme, že model KNN má problém s pretrénovaním, čo je evidentné z výrazného rozdielu medzi výkonom na tréningovej a testovacej sade. Na tréningových dátach model dosahuje vynikajúce výsledky s veľmi nízkym MSE a vysokou presnosťou, zatiaľ čo na testovacej sade je výkon slabší. To naznačuje, že model sa príliš prispôsobil špecifikám tréningových dát a nedokáže sa dobre generalizovať. Zníženie počtu susedov nepomohlo, ba naopak, chyba na testovacích dátach sa ešte zvýšila.
+
+Na zlepšenie výkonu modelu by bolo vhodné napríklad pridanie nových premenných, ktoré by mali silnejšiu koreláciu s hodnotami popularity, čím by lepšie zvládali variabilitu dát a pomohli by predísť pretrénovaniu.
+
+| Metric                        | Test Set | Training Set | 
+|-------------------------------|----------|--------------|
+| **Mean Squared Error (MSE)**   | 261.81   | 1.05         |
+| **R-squared (R²)**             | 0.50     | 1.00         |
+| **Accuracy within ±5**         | 25.95%   | 99.60%       |
+
+## KNN Klasifikácia
+
+V druhom prístupe vyhodnocovania popularity pomocou KNN, sme zvolili klasifikačný model. Tento model predikuje popularitu skladieb ako binárnu hodnotu, kde skladba buď patrí do top 25% (populárne) alebo nie (nepopulárne).
+
+Postup bol podobný ako pri regresnom modeli, no hlavná zmena spočíva v spôsobe vyhodnocovania modelu. Pri regresnom modeli sme používali MSE, zatiaľ čo pri klasifikácii sme vyhodnocovali model pomocou accuracy, recall či precision.
+
+V tomto prístupe sme tiež použili **StandardScaler** na škálovanie dát a **GridSearchCV** na optimalizáciu hyperparametrov. Parametre sme optimalizovali dvomi spôsobmi: raz pre accuracy a raz pre recall.
+
+### Výsledky
+**Accuracy Model (n_neighbors = 60)** dosiahol vyššiu presnosť (Accuracy=78.62%) a lepšie ROC AUC skóre (0.83), čo znamená, že je lepší pri celkovom rozlišovaní medzi triedami (populárne vs. nepopulárne skladby).
+
+**Recall Model (n_neighbors = 5)** sa viac zameriava na recall, ale aj napriek tomu, že bol optimalizovaný na túto metriku, výsledky sa veľmi nezlepšili. Recall je takmer rovnaký ako pri modeli zameranom na presnosť.
+
+Obe metriky (precision a recall) dosahujú pomerne dobrú presnosť. Avšak, vzhľadom na nižší recall, je ich použiteľnosť obmedzená. Modely neidentifikujú správne všetky populárne skladby, čo je dôležitá oblasť na zlepšenie, najmä ak je našou prioritou zachytávanie čo najväčšieho počtu populárnych skladieb.
+
+| Metric                          | Accuracy (Best n_neighbors = 60)     | Recall (Best n_neighbors = 5)         |
+|----------------------------------|-------------------------------------|---------------------------------------|
+| **Accuracy**                     | 78.62%                              | 76.20%                                |
+| **Precision**                    | 62.61%                              | 55.88%                                |
+| **Recall**                       | 48.62%                              | 49.71%                                |
+| **ROC AUC Score**                | 0.83                                 | 0.79                                  |
+| **Confusion Matrix**             | [[3848  452]                        | [[3689  611]                          |
+|                                  |  [ 800  757]]                       |  [ 783  774]]                         |
+
 # Porovnanie a Výsledky
 
 V tejto časti sa zameriame na porovnanie výkonnosti všetkých vyššie naprogramovaných modelov.
