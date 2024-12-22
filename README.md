@@ -2,6 +2,11 @@
 ## Motivacia
 Cieľom tejto analýzy je pochopiť, aké faktory ovplyvňujú popularitu skladieb a využiť tieto poznatky na vytváranie predikčných modelov, ktoré dokážu presne odhadnúť úspešnosť skladieb.
 
+V Suvislosti s touto temou sme si stanovili hlavne otazky na ktore na konci odpovedame:
+1. **Závisí popularita od interpreta?**
+2. **Od akých parametrov závisí popularita?**
+3. **Ktorý model je lepší na predikciu (binárne/nebinarne) a ktorý model je najlepší?**
+   
 # Datasety
 Pre analýzu sme zvolili dataset zo stránky Kaggle ([Spotify Audio Features Dataset](https://www.kaggle.com/datasets/tomigelo/spotify-audio-features)), ktorý obsahuje 17 premenných umožňujúcich analyzovať faktory ovplyvňujúce popularitu skladieb. Dataset je dostatočne rozsiahly, obsahuje **130 325 záznamov**, čo zvyšuje presnosť a spoľahlivosť našej analýzy. Popisy jednotlivých premenných sme doplnili informáciami z oficiálnej stránky Spotify.  
 Okrem základného datasetu sme použili aj **druhý zdroj** ([Spotify Top Artists](https://kworb.net/spotify/artists.html?fbclid=IwZXh0bgNhZW0CMTEAAR2Bj_U0gmgjHBn6Jt3GguG1NYRDpiOLfWvMPkm4bsX1qQZp67yvIKbOv5E_aem_VB5DyAuSgFdu2WpySSbD0Q)), ktorý hodnotí popularitu interpretov na Spotify. Tento zdroj sme vybrali s predpokladom, že popularita skladby úzko súvisí s popularitou interpreta.
@@ -340,6 +345,8 @@ Keďže máme modely, ktoré sa zameriavajú na rôzne typy predikcií – jeden
 | Rozhodovací Strom    | 83.9%   | 71.9%     | 48%                                  | 83%                                 | 61%                                   |
 
 Celkovo najvyššiu accuracy a precision dosiahol model KNN. Napriek tomu však výrazne zaostáva v hodnote F1 score, ktoré kombinuje hodnoty recalla a precision. Tento parameter považujeme za dôležitý, keďže je naším cieľom správne predikovať populárne skladby ako populárne. Preto za najvhodnejšie modely považujeme logistickú regresiu a rozhodovací strom, keďže rozdiely medzi nimi sú veľmi malé. Celkovo ich hodnotíme ako dobré, vyše 70 % skladieb dokážu správne klasifikovať.
+ 
+ Na základe našich výsledkov odporúčame pre klasifikáciu popularity piesní použiť binárne modely, konkrétne **logistickú regresiu** alebo **rozhodovací strom**. Výber medzi týmito dvoma modelmi závisí od konkrétnych požiadaviek na presnosť a interpretáciu výsledkov.
 
 ### Výhody:
 - Jednoduchá interpretácia
@@ -348,40 +355,20 @@ Celkovo najvyššiu accuracy a precision dosiahol model KNN. Napriek tomu však 
 ### Nevýhody:
 - Zjednodušovanie problému (strata informácií)
 
-# Otázky
+# Odpoved na hlavne otazky
 
 1. **Závisí popularita od interpreta?**
 
-   Áno - existuje korelácia medzi popularitou skladby a jej interpretom. Popularita skladby je do veľkej miery závislá na popularite interpreta, čo je dôležité pre predikciu úspechu skladby.
+   DOPLNIT - zuzka
 
 2. **Od akých parametrov závisí popularita?**
 
-   Popularita skladby závisí od rôznych faktorov, medzi ktoré patria:
-   - **Hudobné vlastnosti** skladby (tempo, energia, valencia, atď.)
-   - **Demografické faktory** poslucháčov (preferencie žánrov, vek, lokalita)
-   - **Úspech interpreta** na Spotify (počty sledovaní, počet fanúšikov)
-   - **Sociálne faktory** ako počet zdieľaní alebo pridaní do playlistov
-   - **Dĺžka a štruktúra skladby**
+   DOPLNIT - zuzka
 
 3. **Ktorý model je lepší na predikciu (binárne/nebinarne) a ktorý model je najlepší?**
 
-   Výsledky jasne ukázali výhodu binárnych modelov pre túto konkrétnu úlohu.
+   Výsledky jasne ukázali výhodu binárnych modelov pre túto konkrétnu úlohu. **Nebinárne modely** (lineárna regresia, KNN) nedokázali presne predikovať popularatitu. Ukazalo sa nam ze v tejto teme je to velmi narocne presne predikovat iba z faktorov ktore mame k dispozicii. Na tento ucel sme nasli postacujucu predpoved iba ci hudba bude alebo nebude popularna a na zaklade toho nase    **Binárne modely** (logistická regresia, rozhodovací strom, KNN)  Dosiahli výrazne vyššiu presnosť a lepšie zachytili cieľovú triedu.
 
-   **Nebinárne modely** (lineárna regresia, KNN) nedokázali presne predikovať počet prehratí piesní. Ich presnosť bola veľmi nízka, čo naznačuje, že predikcia presného čísla prehratí je náročná úloha, ktorá vyžaduje sofistikovanejšie modely a presnejšie dáta.
-
-   **Binárne modely** (logistická regresia, rozhodovací strom, KNN) sa naopak ukázali ako oveľa vhodnejšie pre klasifikáciu piesní na populárne a nepopulárne. Dosiahli výrazne vyššiu presnosť a lepšie zachytili cieľovú triedu.
-
-   Hoci binárne modely priniesli lepšie výsledky, je dôležité si uvedomiť, že pri ich použití dochádza k strate informácie. Zjednodušením problému na dve triedy (populárne/nepopulárne) strácame informáciu o stupni popularity. Piesne s podobným počtom prehratí, ale na opačných stranách zvolenej hranice, môžu byť klasifikované úplne odlišne.
-
-   **Logistická regresia**: Dosiahla vyvážený výkon a je vhodná pre prípady, kde je dôležitá interpretácia výsledkov.
-
-   **Rozhodovací strom**: Vyniká v zachytení väčšiny populárnych piesní, ale má vyšší podiel falošne pozitívnych klasifikácií.
-
-   **KNN**: Aj keď dosahuje vysokú presnosť, jeho výkon pri vyvážení presnosti a úplnosti zaostáva za ostatnými modelmi.
-
-   Na základe našich výsledkov odporúčame pre klasifikáciu popularity piesní použiť binárne modely, konkrétne **logistickú regresiu** alebo **rozhodovací strom**. Výber medzi týmito dvoma modelmi závisí od konkrétnych požiadaviek na presnosť a interpretáciu výsledkov.
-
-   **Obmedzenia binárnych modelov** je možné zmierniť použitím nebinárnych modelov pre hrubý odhad popularity alebo analýzu vzťahov medzi premennými.
 
 # Ďalšie vylepšenia, ktoré by malo zmysel aplikovať
 
