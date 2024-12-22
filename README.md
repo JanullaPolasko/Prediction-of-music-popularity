@@ -383,7 +383,7 @@ Celkovo najvyššiu accuracy a precision dosiahol model KNN. Napriek tomu však 
 ---
 
 
-3. **Od akých parametrov závisí popularita?**
+2. **Od akých parametrov závisí popularita?**
 
 Analýza ukázala, že popularitu skladieb ovplyvňuje kombinácia viacerých faktorov. Pozitívne korelujúce faktory zahŕňajú **rank umelca**, **hlasitosť**, **danceability** (vhodnosť na tanec) a **energia**. Tieto vlastnosti zvyšujú šancu skladby stať sa populárnou. Naopak, **akustickosť**, **inštrumentálnosť**, **valence** (emocionálna náplň skladby) a **liveness** (prvky živého vystúpenia) majú skôr negatívny vplyv.
 
@@ -401,7 +401,7 @@ Analýza ukázala, že popularitu skladieb ovplyvňuje kombinácia viacerých fa
 Skladby, ktoré sú hlasité, tanečné a od známych interpretov, majú väčšiu šancu stať sa populárnymi. Negatívne faktory, ako akustickosť a inštrumentálnosť, môžu popularitu obmedziť. Celkovo však slabé korelácie a nízka presnosť regresných modelov naznačujú, že popularita skladieb je výsledkom komplexných vzťahov, ktoré tieto modely nedokázali plne zachytiť.
 
 ---
-4. **Ktorý model je lepší na predikciu (binárne/nebinarne) a ktorý model je najlepší?**
+3. **Ktorý model je lepší na predikciu (binárne/nebinarne) a ktorý model je najlepší?**
 
    Výsledky jasne ukázali **výhodu binárnych modelov** pre túto konkrétnu úlohu. Nebinárne modely (lineárna regresia, KNN) nedokázali presne predikovať popularitu. Ukázalo sa nám, že v tejto téme je veľmi náročné presne predikovať len na základe faktorov, ktoré máme k dispozícii. Na tento účel sme našli postačujúcu predpoveď iba v prípade, či bude hudba populárna alebo nie. Na základe toho naše binárne modely (logistická regresia, rozhodovací strom, KNN) dosiahli výrazne vyššiu presnosť a lepšie zachytili cieľovú triedu.
 ---
