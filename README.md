@@ -1,11 +1,12 @@
 # Prediction-of-music-popularity
-## Motivacia
+## Motivácia
 Cieľom tejto analýzy je pochopiť, aké faktory ovplyvňujú popularitu skladieb a využiť tieto poznatky na vytváranie predikčných modelov, ktoré dokážu presne odhadnúť úspešnosť skladieb.
 
-V Suvislosti s touto temou sme si stanovili hlavne otazky na ktore na konci odpovedame:
+V súvislosti s touto témou sme si stanovili hlavné otázky, na ktoré na konci odpovieme:
 1. **Závisí popularita od interpreta?**
 2. **Od akých parametrov závisí popularita?**
-3. **Ktorý model je lepší na predikciu (binárne/nebinarne) a ktorý model je najlepší?**
+3. **Ktorý model je lepší na predikciu (binárny/nebinárny) a ktorý model je najlepší?**
+
    
 # Datasety
 Pre analýzu sme zvolili dataset zo stránky Kaggle ([Spotify Audio Features Dataset](https://www.kaggle.com/datasets/tomigelo/spotify-audio-features)), ktorý obsahuje 17 premenných umožňujúcich analyzovať faktory ovplyvňujúce popularitu skladieb. Dataset je dostatočne rozsiahly, obsahuje **130 325 záznamov**, čo zvyšuje presnosť a spoľahlivosť našej analýzy. Popisy jednotlivých premenných sme doplnili informáciami z oficiálnej stránky Spotify.  
@@ -363,7 +364,8 @@ Celkovo najvyššiu accuracy a precision dosiahol model KNN. Napriek tomu však 
 
 ---
 
-# Odpoved na hlavne otazky
+# Odpoveď na hlavné otázky
+
 
 
 1. **Závisí popularita od interpreta?**
