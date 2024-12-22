@@ -91,7 +91,7 @@ Najskôr sme sa zamerali na analýzu popularity pomocou lineárnej regresie. Ten
 Podarilo sa nám znížiť hodnotu MSE na testovacej sade z pôvodných **298.8** na **256.1**, čo predstavuje zlepšenie o takmer **15 %**. Toto zlepšenie hodnotíme pozitívne. Napriek tomu je predpoveď stále ďaleko od použiteľnej presnosti. Model nám poskytol zaujímavé poznatky o vzťahoch medzi premennými a potvrdil, že lineárna regresia nie je správnym modelom pre tieto dáta. 
 
 #### Poznatky o vplyve premenných
-- **Pozitívny vplyv na popularitu**: `danceability` , `artist_rank`
+- **Pozitívny vplyv na popularitu**: `danceability` , `artist_rank` , `loudness` 
 - **Negatívny vplyv na popularitu**: `acousticness`, `energy`, `instrumentalness`, `speechiness`
 
 #### Hodnotenie presnosti
