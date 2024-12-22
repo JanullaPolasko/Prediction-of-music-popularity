@@ -128,7 +128,6 @@ Model dosiahol prijateľnú celkovú presnosť (73 %), avšak detailnejšia anal
 - **AUC (plocha pod krivkou):** 0.81  
 Táto hodnota naznačuje veľmi dobrý výkon modelu pri rozlišovaní medzi populárnymi a menej populárnymi skladbami.
 
-![Alt text](images/Recall_logregression.png)
 ---
 
 ### Precision-Recall krivka
@@ -137,7 +136,7 @@ Táto hodnota naznačuje veľmi dobrý výkon modelu pri rozlišovaní medzi pop
 - Na začiatku krivky, keď je recall nízky, model dosahuje veľmi vysokú presnosť. Znamená to, že model je v tomto režime opatrný a označuje za populárne iba piesne, o ktorých je veľmi presvedčený.
 - So zvyšovaním recall (snaha identifikovať viac populárnych piesní) dochádza k poklesu presnosti, pretože model začne nesprávne označovať niektoré piesne ako populárne.
 - **Priemerná presnosť (AP):** 0.60, čo naznačuje uspokojivý, ale nie výnimočný výkon modelu.
-
+![Alt text](images/Recall_logregression.png)
 ---
 
 Výsledky modelu logistickej regresie s **ROC-AUC 0.81** a presnosťou **73 %** naznačujú solídny výkon, najmä pri klasifikácii menej populárnych piesní. Model dokáže identifikovať väčšinu populárnych piesní (vysoký recall), avšak nižšia presnosť naznačuje určité problémy pri správnom určení populárnych skladieb.
