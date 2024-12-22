@@ -281,4 +281,13 @@ Celkovo najvyššiu accuracy a precision dosiahol model KNN. Napriek tomu však 
 ### Nevýhody:
 - Zjednodušovanie problému (strata informácií)
 
+# Ďalšie vylepšenia, ktoré by malo zmysel aplikovať
+
+1. Kombinácia modelov - Vytvorenie modelu, ktorý by skombinoval výstupy viacerých modelov,čím by sme získali výhody každého z nich.
+* Napríklad by sme mohli skombinovať predikcie Logistickej regresie, KNN a Rozhodovacieho stromu. Každý model by zahlasoval a výsledná predikcia by bola tá, ktorá by získala väčšinu hlasov.
+
+2. Hybridný model binárnej a nebinárnej predikcie
+* Krok 1: Použijeme binárny model (napr. Logistickú regresiu alebo rozhodovací strom), aby identifikoval, či je pesnička populárna alebo nie.
+* Krok 2: Na pesničky označené ako populárne aplikujeme nebinárny model (napr. KNN alebo Lineárnu regresiu), ktorý predpovedá presné percento popularity.
+
 
