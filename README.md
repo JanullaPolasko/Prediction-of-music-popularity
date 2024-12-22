@@ -143,7 +143,7 @@ Výsledky modelu logistickej regresie s **ROC-AUC 0.81** a presnosťou **73 %** 
 
 ## Rozhodovací strom
 
-V tejto implementácii sme použili klasifikačný rozhodovací strom na analýzu dát, pričom sme sa zamerali na optimalizáciu jeho výkonu pomocou prerezávania. Rozhodovacie stromy často trpia problémom pretrénovania, keďže model zachytáva šum v dátach. Preto sme aplikovali techniku prerezávania, ktorá umožňuje zjednodušenie modelu odstránením nepotrebných uzlov.
+V tejto implementácii sme použili klasifikačný rozhodovací strom na analýzu dát, pričom sme sa zamerali na optimalizáciu jeho výkonu pomocou prerezávania. Rozhodovacie stromy často trpia problémom pretrénovania, keďže model zachytáva šum v dátach. Preto sme  neskor aplikovali techniku prerezávania, ktorá umožňuje zjednodušenie modelu odstránením nepotrebných uzlov.
 
 ---
 
@@ -195,33 +195,33 @@ Celkový výkon modelu na dátach je slušný, no nie perfektný.
 
 ### Tvar rozhodovacieho stromu
 ![Alt text](images/tree_show.png)
-Strom má veľkú hĺbku a je komplikovaný. To môže byť dôvodom mierneho pretrénovania. Orezanie by mohlo výkon takéhoto komplexného stromu zlepšiť. Hoci neprerezaný strom dosiahol vysokú presnosť na tréningových dátach, na testovacích dátach sa objavili známky pretrénovania – model bol príliš komplexný a mierne prispôsobený detailom trénovacích dát, čo znížilo jeho schopnosť generalizovať na nové dáta.
-
+Strom má veľkú hĺbku a je komplikovaný. To môže byť dôvodom mierneho pretrénovania. Orezanie by mohlo výkon takéhoto komplexného stromu zlepšiť. Model bol na testovacich datach príliš komplexný a mierne prispôsobený detailom trénovacích dát, čo znížilo jeho schopnosť generalizovať na nové dáta.
 Aby sme tento problém vyriešili, pristúpili sme k prerezávaniu stromu pomocou techniky nákladovej komplexnosti (cost complexity pruning). Cieľom je odstrániť zbytočné uzly stromu a dosiahnuť jednoduchší, robustnejší model.
 
-- **Hľadanie parametra alpha**: Hľadáme hodnotu alfa, ktorá vyváži nízku nečistotu a zjednodušenie stromu. Pomocou funkcie cost_complexity_pruning_path sme identifikovali hodnoty ccp_alpha a postupne zjednodušovali strom odstránením uzlov, ktoré minimálne prispievali k zlepšeniu modelu.
+- **Hľadanie parametra alpha**: Hľadáme hodnotu alfa, ktorá vyváži nízku nečistotu a zjednodušenie stromu. 
 ![Alt text](images/alpha_prunning_tree.png)
 - Os X - Hodnota alfa, ktorá určuje mieru prerezávania. Čím je hodnota vyššia, tým viac vetiev sa odstráni.
 - Os Y - celková nečistota listov stromu. Táto hodnota narastá s rastúcou hodnotou alfa, pretože odstránením vetiev dochádza k zjednodušeniu stromu, ale zároveň k zníženiu schopnosti stromu prispôsobiť sa trénovacím dátam.
 
-  Každý prerezaný strom bol vyhodnotený na základe presnosti na tréningových a testovacích dátach, pričom sme sledovali aj robustnosť modelu a jeho schopnosť generalizácie. Nakoniec sme vybrali optimálny strom, ktorý dosiahol najlepšiu testovaciu presnosť.
-
 ![Alt text](images/accuracy_tree.png)
-Tento graf zobrazuje závislosť medzi hodnotou ccp_alpha (parametra pre prerezávanie rozhodovacieho stromu) a presnosťou modelu na tréningových a testovacích dátach.
+Tento graf zobrazuje závislosť medzi hodnotou `ccp_alpha` (parametra pre prerezávanie rozhodovacieho stromu) a presnosťou modelu na tréningových a testovacích dátach.
 
 - Pri nízkych hodnotách alfa je model pretrénovaný, čo vedie k vysokej presnosti na tréningových dátach, ale slabšej na testovacích.
 - Pri veľmi vysokých hodnotách alfa dochádza k underfittingu, keď je strom príliš zjednodušený a nedokáže zachytiť dôležité vzory v dátach.
-Zvolíme hodnotu ccp_alpha v rozsahu 0.01 - 0.03, kde model dosahuje najlepšiu rovnováhu medzi presnosťou na tréningových a testovacích dátach.
-
-
+Zvolíme hodnotu `ccp_alpha` v rozsahu 0.01 - 0.03, kde model dosahuje najlepšiu rovnováhu medzi presnosťou na tréningových a testovacích dátach.
 
 ---
 
 ### Vizualizácia optimálneho zrezaného stromu
 ![Alt text](images/tree_shownew.png)
-Prerezaný strom neobsahuje nepodstatné vetvy a je menej komplexný. Výsledkom je model, ktorý je ľahšie interpretovateľný, robustnejší a dúfame, že bude lepšie generalizovať na nové dáta.
-
+Prerezaný strom neobsahuje nepodstatné vetvy a je menej komplexný. Výsledkom je model, ktorý je ľahšie interpretovateľný.
 ---
+
+### ROC-AUC orezaný strom
+![Alt text](images/ROC_treeneww.png)
+Krivky ROC pre tréningové a testovacie dáta sú podobné. Prerezaný model si zachováva konzistentný výkon na rôznych dátach.
+- **AUC pre testovaciu množinu**: Prerezaný model dosahuje AUC = 0.839, čo je vyššia hodnota v porovnaní s AUC neorezaného modelu (0.808).
+- Rozdiel medzi AUC na tréningových dátach (0.862) a testovacích dátach (0.839) je malý, čo ukazuje, že prerezaný model nie je výrazne pretrénovaný.
 
 ### Porovnanie výsledkov prerezaného a neprerezaného stromu
 
@@ -238,14 +238,6 @@ Prerezaný strom neobsahuje nepodstatné vetvy a je menej komplexný. Výsledkom
 - Prerezaný strom má mierne nižšiu presnosť na tréningových dátach, čo je znakom eliminácie nadmerného prispôsobenia trénovacím dátam.
 - F1-score pre populárne skladby sa mierne zlepšilo, čo naznačuje lepší kompromis medzi presnosťou a citlivosťou.
 - Prerezanie stromu znížilo citlivosť (recall) pre populárne skladby, ale zlepšilo presnosť a generalizáciu.
-
----
-
-### ROC-AUC orezaný strom
-![Alt text](images/ROC_treeneww.png)
-Krivky ROC pre tréningové a testovacie dáta sú podobné. Prerezaný model si zachováva konzistentný výkon na rôznych dátach.
-- **AUC pre testovaciu množinu**: Prerezaný model dosahuje AUC = 0.839, čo je vyššia hodnota v porovnaní s AUC neorezaného modelu (0.808).
-- Rozdiel medzi AUC na tréningových dátach (0.862) a testovacích dátach (0.839) je malý, čo ukazuje, že prerezaný model nie je výrazne pretrénovaný.
 
 ---
 
