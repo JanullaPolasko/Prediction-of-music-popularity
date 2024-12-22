@@ -341,7 +341,7 @@ Keďže máme modely, ktoré sa zameriavajú na rôzne typy predikcií – jeden
 | Model                | ROC AUC | Accuracy  | Precision (trieda populárne pesničky) | Recall (trieda populárne pesničky) | F1-score (trieda populárne pesničky) |
 |----------------------|---------|-----------|--------------------------------------|-------------------------------------|---------------------------------------|
 | Logistická Regresia  | 81%     | 73%       | 55%                                  | 75%                                 | 63%                                   |
-| KNN                  | 83%     | 78.62%    | 63%                                  | 49%                                 | 2 * (0.63 * 0.49) / (0.63 + 0.49) * 100 ≈ 60% |
+| KNN                  | 83%     | 78.62%    | 63%                                  | 49%                                 | 60% |
 | Rozhodovací Strom    | 83.9%   | 71.9%     | 48%                                  | 83%                                 | 61%                                   |
 
 Celkovo najvyššiu accuracy a precision dosiahol model KNN. Napriek tomu však výrazne zaostáva v hodnote F1 score, ktoré kombinuje hodnoty recalla a precision. Tento parameter považujeme za dôležitý, keďže je naším cieľom správne predikovať populárne skladby ako populárne. Preto za najvhodnejšie modely považujeme logistickú regresiu a rozhodovací strom, keďže rozdiely medzi nimi sú veľmi malé. Celkovo ich hodnotíme ako dobré, vyše 70 % skladieb dokážu správne klasifikovať.
@@ -367,7 +367,7 @@ Celkovo najvyššiu accuracy a precision dosiahol model KNN. Napriek tomu však 
 
 3. **Ktorý model je lepší na predikciu (binárne/nebinarne) a ktorý model je najlepší?**
 
-   Výsledky jasne ukázali výhodu binárnych modelov pre túto konkrétnu úlohu. **Nebinárne modely** (lineárna regresia, KNN) nedokázali presne predikovať popularatitu. Ukazalo sa nam ze v tejto teme je to velmi narocne presne predikovat iba z faktorov ktore mame k dispozicii. Na tento ucel sme nasli postacujucu predpoved iba ci hudba bude alebo nebude popularna a na zaklade toho nase    **Binárne modely** (logistická regresia, rozhodovací strom, KNN)  Dosiahli výrazne vyššiu presnosť a lepšie zachytili cieľovú triedu.
+   Výsledky jasne ukázali **výhodu binárnych modelov** pre túto konkrétnu úlohu. Nebinárne modely (lineárna regresia, KNN) nedokázali presne predikovať popularitu. Ukázalo sa nám, že v tejto téme je veľmi náročné presne predikovať len na základe faktorov, ktoré máme k dispozícii. Na tento účel sme našli postačujúcu predpoveď iba v prípade, či bude hudba populárna alebo nie. Na základe toho naše binárne modely (logistická regresia, rozhodovací strom, KNN) dosiahli výrazne vyššiu presnosť a lepšie zachytili cieľovú triedu.
 
 
 # Ďalšie vylepšenia, ktoré by malo zmysel aplikovať
