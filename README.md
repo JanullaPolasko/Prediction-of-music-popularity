@@ -377,6 +377,7 @@ Celkovo najvyššiu accuracy a precision dosiahol model KNN. Napriek tomu však 
 - Zjednodušovanie problému (strata informácií)
 
 # Odpoved na hlavne otazky
+---
 
 1. **Závisí popularita od interpreta?**
 
@@ -386,7 +387,7 @@ Na vizualizáciu korelácie sme použili klasický scatter plot, ktorý vyjadruj
    Rovnako aj pri lineárnej regresii vyšiel pozitívny koeficient pre artist_rank (4,28), čo sa zhoduje s vizualizáciou, ktorá ukazuje, že hodnotenie interpreta zohráva istú úlohu pri určovaní popularity skladieb, aj keď nie je jediným faktorom.
 Keď sa nad tým vlastne zamyslíme, tak popularita skladby a popularita interpreta v realite ani nemôže mať veľmi vysoké hodnoty, pretože by to znamenalo, že každý populárny interpret vydáva výhradne len populárne skladby. Tento predpoklad je však v praxi nereálny. Populárny interpret síce často dosahuje vysoké počty streamov alebo má silnú fanúšikovskú základňu, ale aj tak sa stáva, že len malý podiel jeho skladieb sa stane hitmi. Zvyšok jeho produkcie môže byť menej známy alebo menej úspešný, aj keď stále patrí do portfólia populárneho interpreta.
 Týmto spôsobom je jasné, že medzi popularitou interpreta a popularitou skladby existuje len určitá korelácia. Rôzne faktory môžu spôsobiť, že aj menej populárne skladby od známych interpretov môžu mať významný úspech, zatiaľ čo niektoré ich populárne skladby nemusia dosiahnuť rovnaký úspech. 
-
+---
 
 
 3. **Od akých parametrov závisí popularita?**
@@ -406,11 +407,11 @@ Analýza ukázala, že popularitu skladieb ovplyvňuje kombinácia viacerých fa
 
 Skladby, ktoré sú hlasité, tanečné a od známych interpretov, majú väčšiu šancu stať sa populárnymi. Negatívne faktory, ako akustickosť a inštrumentálnosť, môžu popularitu obmedziť. Celkovo však slabé korelácie a nízka presnosť regresných modelov naznačujú, že popularita skladieb je výsledkom komplexných vzťahov, ktoré tieto modely nedokázali plne zachytiť.
 
-
+---
 4. **Ktorý model je lepší na predikciu (binárne/nebinarne) a ktorý model je najlepší?**
 
    Výsledky jasne ukázali **výhodu binárnych modelov** pre túto konkrétnu úlohu. Nebinárne modely (lineárna regresia, KNN) nedokázali presne predikovať popularitu. Ukázalo sa nám, že v tejto téme je veľmi náročné presne predikovať len na základe faktorov, ktoré máme k dispozícii. Na tento účel sme našli postačujúcu predpoveď iba v prípade, či bude hudba populárna alebo nie. Na základe toho naše binárne modely (logistická regresia, rozhodovací strom, KNN) dosiahli výrazne vyššiu presnosť a lepšie zachytili cieľovú triedu.
-
+---
 
 # Ďalšie vylepšenia, ktoré by malo zmysel aplikovať
 
