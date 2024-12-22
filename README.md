@@ -214,7 +214,7 @@ Zvolíme hodnotu `ccp_alpha` v rozsahu 0.01 - 0.03, kde model dosahuje najlepši
 
 ### Vizualizácia optimálneho zrezaného stromu
 ![Alt text](images/tree_shownew.png)
-Prerezaný strom neobsahuje nepodstatné vetvy a je menej komplexný. Výsledkom je model, ktorý je ľahšie interpretovateľný.
+- Prerezaný strom neobsahuje nepodstatné vetvy a je menej komplexný. Výsledkom je model, ktorý je ľahšie interpretovateľný.
 ---
 
 ### ROC-AUC orezaný strom
