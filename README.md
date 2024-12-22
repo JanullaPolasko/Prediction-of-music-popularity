@@ -75,7 +75,7 @@ Najskôr sme sa zamerali na analýzu popularity pomocou lineárnej regresie. Ten
 ### Kroky
 
 ### Príprava Dát
-1. **Odstránenie stĺpcov**: Odstránili sme stĺpce ako `duration_ms`, `key` a `tempo`. Na základe korelačnej matice sme zistili, že tieto premenné nemajú významný vplyv na model a ich zahrnutie by ho zbytočne komplikovalo.
+1. **Odstránenie stĺpcov**: Odstránili sme stĺpce ako `duration_ms`, `key` a `tempo`. Na základe korelačnej matice sme zistili, že tieto premenné nemajú významný vplyv na model a ich zahrnutie by ho zbytočne komplikovalo. Na transformáciu dát sme sa rozhodli použiť PowerTransformer, ktorý je veľmi užitočný pri práci s dátami, ktoré môžu obsahovať negatívne hodnoty. Táto technika pomáha stabilizovať rozptyl a normalizovať dáta, čím sa model stáva robustnejší a presnejší. Data sme nakoniec este aj preskalovali z dovodu aby všetky premenné majú rovnakú váhu v rámci modelu.
 
 #### Optimalizácia Modelu
 1. **Cross-validácia**: 
