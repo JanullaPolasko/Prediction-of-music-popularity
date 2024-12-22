@@ -3,8 +3,9 @@
 Cieľom tejto analýzy je pochopiť, aké faktory ovplyvňujú popularitu skladieb a využiť tieto poznatky na vytváranie predikčných modelov, ktoré dokážu presne odhadnúť úspešnosť skladieb.
 
 # Datasety
-Pre analýzu sme zvolili dataset zo stránky Kaggle ([Spotify Audio Features Dataset](https://www.kaggle.com/datasets/tomigelo/spotify-audio-features)), ktorý obsahuje 17 premenných umožňujúcich analyzovať faktory ovplyvňujúce popularitu skladieb. Dataset je dostatočne rozsiahly, obsahuje **130 325 záznamov**, čo zvyšuje presnosť a spoľahlivosť našej analýzy. Popisy jednotlivých premenných sme doplnili informáciami z oficiálnej stránky Spotify. 
-Okrem základného datasetu sme použili aj **druhý zdroj** ([Spotify Top Artists] (https://kworb.net/spotify/artists.html?fbclid=IwZXh0bgNhZW0CMTEAAR2Bj_U0gmgjHBn6Jt3GguG1NYRDpiOLfWvMPkm4bsX1qQZp67yvIKbOv5E_aem_VB5DyAuSgFdu2WpySSbD0Q)), ktorý hodnotí popularitu interpretov na Spotify. Tento zdroj sme vybrali s predpokladom, že popularita skladby úzko súvisí s popularitou interpreta. 
+Pre analýzu sme zvolili dataset zo stránky Kaggle ([Spotify Audio Features Dataset](https://www.kaggle.com/datasets/tomigelo/spotify-audio-features)), ktorý obsahuje 17 premenných umožňujúcich analyzovať faktory ovplyvňujúce popularitu skladieb. Dataset je dostatočne rozsiahly, obsahuje **130 325 záznamov**, čo zvyšuje presnosť a spoľahlivosť našej analýzy. Popisy jednotlivých premenných sme doplnili informáciami z oficiálnej stránky Spotify.  
+Okrem základného datasetu sme použili aj **druhý zdroj** ([Spotify Top Artists](https://kworb.net/spotify/artists.html?fbclid=IwZXh0bgNhZW0CMTEAAR2Bj_U0gmgjHBn6Jt3GguG1NYRDpiOLfWvMPkm4bsX1qQZp67yvIKbOv5E_aem_VB5DyAuSgFdu2WpySSbD0Q)), ktorý hodnotí popularitu interpretov na Spotify. Tento zdroj sme vybrali s predpokladom, že popularita skladby úzko súvisí s popularitou interpreta.
+
 
 ### Spracovanie interpretov
 Aby sme interpretov reprezentovali kvantitatívnou premennou namiesto kategórie (mena interpreta), priradili sme im hodnotu popularity podľa počtu streamov:
