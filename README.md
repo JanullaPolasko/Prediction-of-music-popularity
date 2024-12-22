@@ -141,3 +141,94 @@ Táto hodnota naznačuje veľmi dobrý výkon modelu pri rozlišovaní medzi pop
 
 Výsledky modelu logistickej regresie s **ROC-AUC 0.81** a presnosťou **73 %** naznačujú solídny výkon, najmä pri klasifikácii menej populárnych piesní. Model dokáže identifikovať väčšinu populárnych piesní (vysoký recall), avšak nižšia presnosť naznačuje určité problémy pri správnom určení populárnych skladieb.
 
+## Rozhodovací strom
+
+V tejto implementácii sme použili klasifikačný rozhodovací strom na analýzu dát, pričom sme sa zamerali na optimalizáciu jeho výkonu pomocou prerezávania. Rozhodovacie stromy často trpia problémom pretrénovania, keďže model zachytáva šum v dátach. Preto sme aplikovali techniku prerezávania, ktorá umožňuje zjednodušenie modelu odstránením nepotrebných uzlov.
+
+---
+
+### Výsledky neprerezaného modelu
+
+Použili sme klasifikačný rozhodovací strom s maximálnou hĺbkou 10 a vyvážením tried pomocou parametra `class_weight='balanced'`. Ak by tento parameter nebol nastavený, model by predpokladal, že všetky triedy majú rovnakú váhu, bez ohľadu na ich početnosť v dátach. To znamená, že dominantná trieda by mala vyššiu prioritu a model by sa snažil minimalizovať chyby na početnejšej triede, čo by viedlo k tomu, že by zase ignoroval menej početne triedy.
+
+---
+
+### Trénovacie dáta
+
+- **Tréningová presnosť**: 74,50 % – model správne klasifikoval takmer 75 % prípadov na trénovacích dátach.
+- **Recall (citlivosť) pre triedu 1**: 96 % – náš model dokáže zachytiť takmer všetky populárne skladby, čo je zásadné pre náš cieľ.
+- **Precision (presnosť) pre triedu 1**: 51 % – model má pri predikcii triedy 1 viac falošne pozitívnych prípadov, teda nepopulárne skladby označí ako populárne. Toto je problém.
+- **F1-score pre triedu 1**: 0.66 – ukazuje, že model má slušný balans medzi presnosťou a citlivosťou pri predikcii populárnych skladieb.
+
+Celkový výkon modelu na dátach je slušný, no nie perfektný.
+
+---
+
+### Testovacie dáta
+
+- **Recall (citlivosť) pre triedu 1**: 87 % – aj na nových dátach model zachytí väčšinu populárnych skladieb.
+- **Precision (presnosť) pre triedu 1**: 46 % – presnosť je nižšia ako na trénovacích dátach, čo znamená, že model má stále viac falošne pozitívnych prípadov.
+- **F1-score pre triedu 1**: 0.60 – model má kompromis medzi presnosťou a citlivosťou.
+- **Celková presnosť**: 69.6 % – výkon modelu na testovacích dátach je primeraný, hoci hlavný dôraz je na triedu 1.
+
+#### Záver
+- Vysoký recall pre triedu 1 (96 % na tréningových a 87 % na testovacích dátach) naznačuje, že model spoľahlivo zachytáva väčšinu populárnych skladieb, čo je kľúčové pre náš cieľ.
+- F1-score pre triedu 1 (0.66 na tréningových a 0.60 na testovacích dátach) ukazuje dobrý balans medzi citlivosťou a presnosťou, pričom model si udržiava primeraný výkon aj na nových dátach.
+- Stabilná presnosť medzi tréningovými (74.6 %) a testovacími (69.6 %) dátami naznačuje, že model nie je výrazne pretrénovaný a dokáže generalizovať.
+- Relatívne nízka presnosť pre triedu 1 (51 % na tréningových a 46 % na testovacích dátach) signalizuje, že model často označuje nepopulárne skladby ako populárne, čo by mohlo byť zlepšené ďalším ladením.
+
+---
+
+### ROC-AUC krivka
+
+- **AUC skóre pre tréningovú množinu**: 0.893 – Model má veľmi dobrú schopnosť odlišovať medzi triedami na tréningových dátach. AUC hodnota 0.893 naznačuje, že model efektívne zachytáva rozdiely medzi populárnymi a nepopulárnymi skladbami počas tréningu.
+- **AUC skóre pre testovaciu množinu**: 0.808 – Výkon modelu na testovacích dátach je stále dobrý, ale mierne slabší ako na tréningových dátach. Tento rozdiel (0.085) naznačuje, že model nie je výrazne pretrénovaný a dokáže generalizovať na nové dáta.
+
+#### Tvar ROC kriviek
+- Tréningová krivka je bližšie k hornému ľavému rohu, čo značí vyššiu citlivosť pri zachovaní nízkeho množstva falošne pozitívnych predikcií.
+- Testovacia krivka je podobná, no mierne posunutá nižšie – model na testovacích dátach niekedy generuje viac falošne pozitívnych predikcií.
+
+---
+
+### Tvar rozhodovacieho stromu
+
+Strom má veľkú hĺbku a je komplikovaný. To môže byť dôvodom mierneho pretrénovania. Orezanie by mohlo výkon takéhoto komplexného stromu zlepšiť. Hoci neprerezaný strom dosiahol vysokú presnosť na tréningových dátach, na testovacích dátach sa objavili známky pretrénovania – model bol príliš komplexný a mierne prispôsobený detailom trénovacích dát, čo znížilo jeho schopnosť generalizovať na nové dáta.
+
+Aby sme tento problém vyriešili, pristúpili sme k prerezávaniu stromu pomocou techniky nákladovej komplexnosti (cost complexity pruning). Cieľom je odstrániť zbytočné uzly stromu a dosiahnuť jednoduchší, robustnejší model.
+
+- **Hľadanie parametra alpha**: Hľadáme hodnotu alfa, ktorá vyváži nízku nečistotu a zjednodušenie stromu. Pomocou funkcie cost_complexity_pruning_path sme identifikovali hodnoty ccp_alpha a postupne zjednodušovali strom odstránením uzlov, ktoré minimálne prispievali k zlepšeniu modelu.
+---
+
+### Vizualizácia optimálneho zrezaného stromu
+
+Prerezaný strom neobsahuje nepodstatné vetvy a je menej komplexný. Výsledkom je model, ktorý je ľahšie interpretovateľný, robustnejší a dúfame, že bude lepšie generalizovať na nové dáta.
+
+---
+
+### Porovnanie výsledkov prerezaného a neprerezaného stromu
+
+| Metrika                  	 | Neorezaný strom | Prerezaný strom | Zmena |
+|---------------------------|------------------|------------------|-------|
+| Tréningová presnosť       | 74.6 %           | 74.0 %           | Mierny pokles v presnosti |
+| Testovacia presnosť       | 69.6 %           | 71.9 %           | Zlepšenie presnosti na testovacích dátach |
+| Precision (trieda 1)      | 0.46             | 0.48             | Mierne zlepšenie |
+| Recall (trieda 1)         | 0.87             | 0.83             | Mierny pokles citlivosti |
+| F1-score (trieda 1)       | 0.60             | 0.61             | Mierne zlepšenie |
+
+### Záver
+- Prerezaný strom dosahuje vyššiu presnosť na testovacích dátach, čo naznačuje, že sa lepšie generalizuje na nové dáta.
+- Prerezaný strom má mierne nižšiu presnosť na tréningových dátach, čo je znakom eliminácie nadmerného prispôsobenia trénovacím dátam.
+- F1-score pre populárne skladby sa mierne zlepšilo, čo naznačuje lepší kompromis medzi presnosťou a citlivosťou.
+- Prerezanie stromu znížilo citlivosť (recall) pre populárne skladby, ale zlepšilo presnosť a generalizáciu.
+
+---
+
+### ROC-AUC orezaný strom
+
+Krivky ROC pre tréningové a testovacie dáta sú podobné. Prerezaný model si zachováva konzistentný výkon na rôznych dátach.
+- **AUC pre testovaciu množinu**: Prerezaný model dosahuje AUC = 0.839, čo je vyššia hodnota v porovnaní s AUC neorezaného modelu (0.808).
+- Rozdiel medzi AUC na tréningových dátach (0.862) a testovacích dátach (0.839) je malý, čo ukazuje, že prerezaný model nie je výrazne pretrénovaný.
+
+---
+
+
