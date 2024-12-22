@@ -154,27 +154,30 @@ Použili sme klasifikačný rozhodovací strom s maximálnou hĺbkou 10 a vyvá�
 ---
 
 ### Trénovacie dáta
+| Metrika                          | Hodnota   |
+|-----------------------------------|-----------|
+| **Tréningová presnosť**          | 74.50 %   |
+| **Recall (citlivosť) pre triedu 1** | 96 %      |
+| **Precision (presnosť) pre triedu 1** | 51 %   |
+| **F1-score pre triedu 1**         | 0.66      |
 
-- **Tréningová presnosť**: 74,50 % – model správne klasifikoval takmer 75 % prípadov na trénovacích dátach.
-- **Recall (citlivosť) pre triedu 1**: 96 % – náš model dokáže zachytiť takmer všetky populárne skladby, čo je zásadné pre náš cieľ.
-- **Precision (presnosť) pre triedu 1**: 51 % – model má pri predikcii triedy 1 viac falošne pozitívnych prípadov, teda nepopulárne skladby označí ako populárne. Toto je problém.
+- Náš model dokáže zachytiť takmer všetky populárne skladby (recall), čo je zásadné pre náš cieľ.
+- Model má pri predikcii triedy 1 viac falošne pozitívnych prípadov (Precision), teda nepopulárne skladby označí ako populárne. Toto je problém.
 - **F1-score pre triedu 1**: 0.66 – ukazuje, že model má slušný balans medzi presnosťou a citlivosťou pri predikcii populárnych skladieb.
-
 Celkový výkon modelu na dátach je slušný, no nie perfektný.
 
 ---
 
 ### Testovacie dáta
+| Metrika                          | Hodnota   |
+|-----------------------------------|-----------|
+| **Recall (citlivosť) pre triedu 1** | 87 %      |
+| **Precision (presnosť) pre triedu 1** | 46 %    |
+| **F1-score pre triedu 1**         | 0.60      |
+| **Celková presnosť**             | 69.6 %    |
 
-- **Recall (citlivosť) pre triedu 1**: 87 % – aj na nových dátach model zachytí väčšinu populárnych skladieb.
-- **Precision (presnosť) pre triedu 1**: 46 % – presnosť je nižšia ako na trénovacích dátach, čo znamená, že model má stále viac falošne pozitívnych prípadov.
-- **F1-score pre triedu 1**: 0.60 – model má kompromis medzi presnosťou a citlivosťou.
+- Aj na nových dátach model zachytí väčšinu populárnych skladieb (Recall). Model spoľahlivo zachytáva väčšinu populárnych skladieb, čo je kľúčové pre náš cieľ.
 - **Celková presnosť**: 69.6 % – výkon modelu na testovacích dátach je primeraný, hoci hlavný dôraz je na triedu 1.
-
-#### Záver
-- Vysoký recall pre triedu 1 (96 % na tréningových a 87 % na testovacích dátach) naznačuje, že model spoľahlivo zachytáva väčšinu populárnych skladieb, čo je kľúčové pre náš cieľ.
-- F1-score pre triedu 1 (0.66 na tréningových a 0.60 na testovacích dátach) ukazuje dobrý balans medzi citlivosťou a presnosťou, pričom model si udržiava primeraný výkon aj na nových dátach.
-- Stabilná presnosť medzi tréningovými (74.6 %) a testovacími (69.6 %) dátami naznačuje, že model nie je výrazne pretrénovaný a dokáže generalizovať.
 - Relatívne nízka presnosť pre triedu 1 (51 % na tréningových a 46 % na testovacích dátach) signalizuje, že model často označuje nepopulárne skladby ako populárne, čo by mohlo byť zlepšené ďalším ladením.
 
 ---
