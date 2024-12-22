@@ -291,27 +291,48 @@ Na zlepšenie výkonu modelu by bolo vhodné napríklad pridanie nových premenn
 
 ## KNN Klasifikácia
 
-V druhom prístupe vyhodnocovania popularity pomocou KNN, sme zvolili klasifikačný model. Tento model predikuje popularitu skladieb ako binárnu hodnotu, kde skladba buď patrí do top 25% (populárne) alebo nie (nepopulárne).
+V druhom prístupe vyhodnocovania popularity pomocou KNN sme zvolili klasifikačný model. Tento model predikuje popularitu skladieb ako binárnu hodnotu, kde skladba buď patrí do top 25% (populárne), alebo nie (nepopulárne).
+Postup bol podobný ako pri regresnom modeli, no hlavná zmena spočíva v spôsobe vyhodnocovania modelu. Pri regresnom modeli sme používali MSE, zatiaľ čo pri klasifikácii sme vyhodnocovali model pomocou **accuracy**, **recall** či **precision**.
 
-Postup bol podobný ako pri regresnom modeli, no hlavná zmena spočíva v spôsobe vyhodnocovania modelu. Pri regresnom modeli sme používali MSE, zatiaľ čo pri klasifikácii sme vyhodnocovali model pomocou accuracy, recall či precision.
+V tomto prístupe sme tiež použili:
+- **StandardScaler** na škálovanie dát.
+- **GridSearchCV** na optimalizáciu hyperparametrov. Parametre sme optimalizovali dvomi spôsobmi: raz pre **accuracy** a raz pre **recall**.
 
-V tomto prístupe sme tiež použili **StandardScaler** na škálovanie dát a **GridSearchCV** na optimalizáciu hyperparametrov. Parametre sme optimalizovali dvomi spôsobmi: raz pre accuracy a raz pre recall.
+---
 
 ### Výsledky
-**Accuracy Model (n_neighbors = 60)** dosiahol vyššiu presnosť (Accuracy=78.62%) a lepšie ROC AUC skóre (0.83), čo znamená, že je lepší pri celkovom rozlišovaní medzi triedami (populárne vs. nepopulárne skladby).
 
-**Recall Model (n_neighbors = 5)** sa viac zameriava na recall, ale aj napriek tomu, že bol optimalizovaný na túto metriku, výsledky sa veľmi nezlepšili. Recall je takmer rovnaký ako pri modeli zameranom na presnosť.
+#### Accuracy Model (`n_neighbors = 60`):
+Model optimalizovaný na presnosť dosiahol výborné výsledky:
+- **Presnosť (Accuracy)**: 78.62%
+- **ROC AUC skóre**: 0.83
+Tieto výsledky naznačujú, že model sa celkovo dobre vyrovnáva s rozlišovaním medzi populárnymi a nepopulárnymi skladbami. Vyššie ROC AUC skóre znamená, že model je veľmi efektívny pri rozlišovaní medzi triedami, aj keď nie všetky populárne skladby sú správne identifikované.
 
-Obe metriky (precision a recall) dosahujú pomerne dobrú presnosť. Avšak, vzhľadom na nižší recall, je ich použiteľnosť obmedzená. Modely neidentifikujú správne všetky populárne skladby, čo je dôležitá oblasť na zlepšenie, najmä ak je našou prioritou zachytávanie čo najväčšieho počtu populárnych skladieb.
+#### Recall Model (`n_neighbors = 5`):
+Model zameraný na **recall** dosiahol:
+- **Recall**: 49.71%
+- **F1 skóre**: 52.62%
+Aj keď bol tento model optimalizovaný na recall, výsledky sú len mierne lepšie pri zachytávaní populárnych skladieb. Model stále nevykazuje výrazné zlepšenie oproti modelu optimalizovanému na presnosť.
 
-| Metric                          | Accuracy (Best n_neighbors = 60)     | Recall (Best n_neighbors = 5)         |
-|----------------------------------|-------------------------------------|---------------------------------------|
-| **Accuracy**                     | 78.62%                              | 76.20%                                |
-| **Precision**                    | 62.61%                              | 55.88%                                |
-| **Recall**                       | 48.62%                              | 49.71%                                |
-| **ROC AUC Score**                | 0.83                                 | 0.79                                  |
-| **Confusion Matrix**             | [[3848  452]                        | [[3689  611]                          |
-|                                  |  [ 800  757]]                       |  [ 783  774]]                         |
+---
+
+### Porovnanie Metód
+
+| **Metric**             | **Accuracy Model** (`n_neighbors = 60`) | **Recall Model** (`n_neighbors = 5`) |
+|-------------------------|-----------------------------------------|---------------------------------------|
+| **Best Hyperparameters**| `{'n_neighbors': 60}`                  | `{'n_neighbors': 5}`                 |
+| **Accuracy**            | 78.62%                                | 76.20%                               |
+| **Precision**           | 62.61%                                | 55.88%                               |
+| **Recall**              | 48.62%                                | 49.71%                               |
+| **F1 Score**            | 54.74%                                | 52.62%                               |
+| **ROC AUC Score**       | 0.83                                  | 0.79                                 |
+| **Confusion Matrix**    | `[[3848, 452], [800, 757]]`            | `[[3689, 611], [783, 774]]`          |
+
+---
+![Alt text](images/KNN_roc.png)
+### Zhodnotenie
+Hodnota **AUC = 0.83** znamená, že pravdepodobnosť správnej klasifikácie pozitívneho a negatívneho príkladu je 83 %. To poukazuje na dobrú schopnosť modelu rozlišovať medzi triedami, no stále existuje priestor na zlepšenie.
+
 
 # Porovnanie a Výsledky
 
@@ -359,13 +380,35 @@ Celkovo najvyššiu accuracy a precision dosiahol model KNN. Napriek tomu však 
 
 1. **Závisí popularita od interpreta?**
 
-   DOPLNIT - zuzka
+   Túto otázku sme si položili hneď na začiatku, keď sme sa rozhodovali, akým spôsobom budeme pracovať s kategorickou premennou „meno interpreta“. Zavedenie dummy premenných by bolo neefektívne, a takisto by bolo nesprávne úplne vyhodiť túto premennú, keďže sme vychádzali z predpokladu, že meno interpreta má silný vplyv na popularitu skladby. Problém sme teda vyriešili tak, že namiesto mena interpreta sme zaviedli rank, ktorý predstavuje umiestnenie interpreta v rebríčku podľa celkových streamov.
+Na vizualizáciu korelácie sme použili klasický scatter plot, ktorý vyjadruje vzťah medzi popularitou skladieb a hodnotením interpreta. Spearmanov korelačný koeficient bol 0,39, čo ukazuje na pozitívnu, aj keď miernu koreláciu medzi týmito dvoma premennými. Aj keď táto závislosť nie je veľmi silná, naznačuje, že populárnejší interpreti majú tendenciu mať vyššiu popularitu svojich skladieb. Rozptýlenie bodov v grafe ukazuje, že aj menej populárni interpreti môžu mať úspešné skladby, a naopak, populárni interpreti nemusia vždy dosiahnuť najvyššiu popularitu so všetkými svojimi skladbami. Tento rozptyl naznačuje určitú variabilitu v tom, ako hodnotenie interpreta ovplyvňuje popularitu, čo znamená, že aj keď populárnejší umelci zvyčajne dosahujú vyššie skóre popularity pre svoje skladby, iné faktory stále prispievajú k konečnej popularite skladby.
 
-2. **Od akých parametrov závisí popularita?**
+Rovnako aj pri lineárnej regresii vyšiel pozitívny koeficient pre artist_rank (4,28), čo sa zhoduje s vizualizáciou, ktorá ukazuje, že hodnotenie interpreta zohráva istú úlohu pri určovaní popularity skladieb, aj keď nie je jediným faktorom.
+Keď sa nad tým vlastne zamyslíme, tak popularita skladby a popularita interpreta v realite ani nemôže mať veľmi vysoké hodnoty, pretože by to znamenalo, že každý populárny interpret vydáva výhradne len populárne skladby. Tento predpoklad je však v praxi nereálny. Populárny interpret síce často dosahuje vysoké počty streamov alebo má silnú fanúšikovskú základňu, ale aj tak sa stáva, že len malý podiel jeho skladieb sa stane hitmi. Zvyšok jeho produkcie môže byť menej známy alebo menej úspešný, aj keď stále patrí do portfólia populárneho interpreta.
+Dôvodom je, že popularita skladby nezávisí len od interpreta, ale aj od mnohých ďalších faktorov. Tieto faktory môžu zahŕňať aktuálne hudobné trendy, marketingové aktivity, spolupráce s inými umelcami, sezónne vplyvy (napríklad vianočné skladby alebo letné hity).
+Týmto spôsobom je jasné, že medzi popularitou interpreta a popularitou skladby existuje len určitá korelácia. Rôzne faktory môžu spôsobiť, že aj menej populárne skladby od známych interpretov môžu mať významný úspech, zatiaľ čo niektoré ich populárne skladby nemusia dosiahnuť rovnaký úspech. 
 
-   DOPLNIT - zuzka
 
-3. **Ktorý model je lepší na predikciu (binárne/nebinarne) a ktorý model je najlepší?**
+
+3. **Od akých parametrov závisí popularita?**
+
+Analýza ukázala, že popularitu skladieb ovplyvňuje kombinácia viacerých faktorov. Pozitívne korelujúce faktory zahŕňajú **rank umelca**, **hlasitosť**, **danceability** (vhodnosť na tanec) a **energia**. Tieto vlastnosti zvyšujú šancu skladby stať sa populárnou. Naopak, **akustickosť**, **inštrumentálnosť**, **valence** (emocionálna náplň skladby) a **liveness** (prvky živého vystúpenia) majú skôr negatívny vplyv.
+
+
+### Korelačné Výsledky (Spearmanova Korelácia)
+- **Pozitívne faktory**: hlasitosť (0.58), danceability (0.48), rank umelca (0.39).
+- **Negatívne faktory**: akustickosť (-0.47), inštrumentálnosť (-0.40), liveness (-0.03).
+
+
+### Lineárna Regressia: Kľúčové Koeficienty
+- Najvýraznejšie pozitívne vplyvy: hlasitosť (9.75), danceability (5.16), rank interpreta (4.28).
+- Najvýraznejšie negatívne vplyvy: valence (-3.98), liveness (-2.32), akustickosť (-1.84).
+
+
+Skladby, ktoré sú hlasité, tanečné a od známych interpretov, majú väčšiu šancu stať sa populárnymi. Negatívne faktory, ako akustickosť a inštrumentálnosť, môžu popularitu obmedziť. Celkovo však slabé korelácie a nízka presnosť regresných modelov naznačujú, že popularita skladieb je výsledkom komplexných vzťahov, ktoré tieto modely nedokázali plne zachytiť.
+
+
+4. **Ktorý model je lepší na predikciu (binárne/nebinarne) a ktorý model je najlepší?**
 
    Výsledky jasne ukázali **výhodu binárnych modelov** pre túto konkrétnu úlohu. Nebinárne modely (lineárna regresia, KNN) nedokázali presne predikovať popularitu. Ukázalo sa nám, že v tejto téme je veľmi náročné presne predikovať len na základe faktorov, ktoré máme k dispozícii. Na tento účel sme našli postačujúcu predpoveď iba v prípade, či bude hudba populárna alebo nie. Na základe toho naše binárne modely (logistická regresia, rozhodovací strom, KNN) dosiahli výrazne vyššiu presnosť a lepšie zachytili cieľovú triedu.
 
