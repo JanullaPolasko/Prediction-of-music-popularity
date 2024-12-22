@@ -385,7 +385,6 @@ Na vizualizáciu korelácie sme použili klasický scatter plot, ktorý vyjadruj
 
    Rovnako aj pri lineárnej regresii vyšiel pozitívny koeficient pre artist_rank (4,28), čo sa zhoduje s vizualizáciou, ktorá ukazuje, že hodnotenie interpreta zohráva istú úlohu pri určovaní popularity skladieb, aj keď nie je jediným faktorom.
 Keď sa nad tým vlastne zamyslíme, tak popularita skladby a popularita interpreta v realite ani nemôže mať veľmi vysoké hodnoty, pretože by to znamenalo, že každý populárny interpret vydáva výhradne len populárne skladby. Tento predpoklad je však v praxi nereálny. Populárny interpret síce často dosahuje vysoké počty streamov alebo má silnú fanúšikovskú základňu, ale aj tak sa stáva, že len malý podiel jeho skladieb sa stane hitmi. Zvyšok jeho produkcie môže byť menej známy alebo menej úspešný, aj keď stále patrí do portfólia populárneho interpreta.
-Dôvodom je, že popularita skladby nezávisí len od interpreta, ale aj od mnohých ďalších faktorov. Tieto faktory môžu zahŕňať aktuálne hudobné trendy, marketingové aktivity, spolupráce s inými umelcami, sezónne vplyvy (napríklad vianočné skladby alebo letné hity).
 Týmto spôsobom je jasné, že medzi popularitou interpreta a popularitou skladby existuje len určitá korelácia. Rôzne faktory môžu spôsobiť, že aj menej populárne skladby od známych interpretov môžu mať významný úspech, zatiaľ čo niektoré ich populárne skladby nemusia dosiahnuť rovnaký úspech. 
 
 
@@ -395,12 +394,12 @@ Týmto spôsobom je jasné, že medzi popularitou interpreta a popularitou sklad
 Analýza ukázala, že popularitu skladieb ovplyvňuje kombinácia viacerých faktorov. Pozitívne korelujúce faktory zahŕňajú **rank umelca**, **hlasitosť**, **danceability** (vhodnosť na tanec) a **energia**. Tieto vlastnosti zvyšujú šancu skladby stať sa populárnou. Naopak, **akustickosť**, **inštrumentálnosť**, **valence** (emocionálna náplň skladby) a **liveness** (prvky živého vystúpenia) majú skôr negatívny vplyv.
 
 
-### Korelačné Výsledky (Spearmanova Korelácia)
+#### Korelačné Výsledky (Spearmanova Korelácia)
 - **Pozitívne faktory**: hlasitosť (0.58), danceability (0.48), rank umelca (0.39).
 - **Negatívne faktory**: akustickosť (-0.47), inštrumentálnosť (-0.40), liveness (-0.03).
 
 
-### Lineárna Regressia: Kľúčové Koeficienty
+#### Lineárna Regressia: Kľúčové Koeficienty
 - Najvýraznejšie pozitívne vplyvy: hlasitosť (9.75), danceability (5.16), rank interpreta (4.28).
 - Najvýraznejšie negatívne vplyvy: valence (-3.98), liveness (-2.32), akustickosť (-1.84).
 
