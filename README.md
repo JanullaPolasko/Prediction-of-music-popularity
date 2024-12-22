@@ -126,7 +126,8 @@ Model dosiahol prijateľnú celkovú presnosť (73 %), avšak detailnejšia anal
 ![Alt text](images/ROC_logregression.png)
 
 - **AUC (plocha pod krivkou):** 0.81  
-  Táto hodnota naznačuje veľmi dobrý výkon modelu pri rozlišovaní medzi populárnymi a menej populárnymi skladbami.
+Táto hodnota naznačuje veľmi dobrý výkon modelu pri rozlišovaní medzi populárnymi a menej populárnymi skladbami.
+
 ![Alt text](images/Recall_logregression.png)
 ---
 
