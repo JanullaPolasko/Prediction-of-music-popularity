@@ -21,11 +21,30 @@ Aby sme skladbu mohli označiť ako populárnu alebo nepopulárnu, rozhodli sme 
 
 
 ### Korelačná analýza
-Pre analýzu korelácií sme zvolili **Spearmanovu koreláciu**, ktorá lepšie zachytáva nelineárne vzťahy. Výrazné korelácie sme pozorovali pri:
-- **Pozitívna korelácia**: `danceability`, `energy`, `loudness`, `artist_rank`.
-- **Negatívna korelácia**: `acousticness`, `instrumentalness`.
   ![Alt text](images/korelacia.png)
+Pre analýzu korelácií sme zvolili **Spearmanovu koreláciu**, ktorá lepšie zachytáva nelineárne vzťahy. Výrazné korelácie sme pozorovali pri:
+**1. Pozitívne korelácie**
 
+- **Popularity vs. Artists** (ρ = 0.39)  
+  Popularita mierne rastie pri lepšom rankingu interpretov. Najpopulárnejšie skladby patria často interpretom s najlepším umiestnením. Populárnejší umelci majú tendenciu vydávať skladby s vyššou popularitou, čo je očakávaný jav..
+
+- **Popularity vs. Energy** (ρ = 0.45)  
+  Popularita rastie s energiou skladby, no graf je roztrúsený. Menej výrazný vzťah.
+
+- **Popularity vs. Danceability** (ρ = 0.48)  
+  Skladby s vyššími hodnotami danceability majú vyššiu šancu stať sa populárnymi.
+
+- **Popularity vs. Loudness** (ρ = 0.58)  
+  Vidíme jasný pozitívny vzťah medzi hlasitosťou a popularitou. Skladby, ktoré sú hlasnejšie (hodnoty dB bližšie k 0), majú tendenciu byť populárnejšie
+ ![Alt text](images/statistic.png)
+
+**2. Negatívne korelácie**
+
+- **Popularity vs. Instrumentalness** (ρ = -0.40)  
+  Väčšina populárnych skladieb má nízku inštrumentálnosť. Vidíme slabú negatívnu koreláciu – čím vyššia je inštrumentálnosť, tým nižšia je popularita skladieb.
+
+- **Popularity vs. Acousticness** (ρ = -0.47)  
+  Vysoká akustickosť je častejšie spojená s nižšou popularitou.
 
 ---
 
