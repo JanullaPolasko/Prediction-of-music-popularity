@@ -241,5 +241,44 @@ Krivky ROC pre tréningové a testovacie dáta sú podobné. Prerezaný model si
 - Prerezanie stromu znížilo citlivosť (recall) pre populárne skladby, ale zlepšilo presnosť a generalizáciu.
 
 ---
+# Porovnanie a Výsledky
+
+V tejto časti sa zameriame na porovnanie výkonnosti všetkých vyššie naprogramovaných modelov.
+
+Keďže máme modely, ktoré sa zameriavajú na rôzne typy predikcií – jeden na popularitu ako nebinárnu veličinu a druhý na binárnu hodnotu – budeme tieto dve skupiny hodnotiť samostatne a následne ich porovnáme pomocou presnosti. Celkovo by sme zhodnotili kvalitu nebinárnych modelov ako nedostatočujúcu. Accuracy sa pohybuje len okolo 25 % pri tolerancii ±5. Avšak ak zvýšime toleranciu, tak sa aj výrazne zvýši accuracy. Preto by tieto modely mohli byť užitočné aspoň pre hrubý odhad.
+
+### Nebinarna Klasifikacia Popularity
+
+| Model               | MSE na test_df | Accuracy  |
+|---------------------|----------------|-----------|
+| Lineárna Regresia   | 256.17         | 25.7 %    |
+| KNN                 | 261.81         | 25.95 %   |
+
+### Výhody nebinárnych modelov:
+- Jednoduchá interpretácia a implementácia
+- Potenciál na presné predikovanie pre lepšie datasety
+- Môžeme použiť, keď je potrebné odhadnúť presnú hodnotu
+- Môžu ukázať presné vzťahy medzi premennými (regresia)
+
+### Nevýhody nebinárnych modelov:
+- Slabé pre nekorelované premenné (nemajú lineárne závislosti)
+- Accuracy silno závisí od škály predikcií a nastavenej tolerancie
+
+### Binárna Klasifikácia Popularity
+
+| Model                | ROC AUC | Accuracy  | Precision (trieda populárne pesničky) | Recall (trieda populárne pesničky) | F1-score (trieda populárne pesničky) |
+|----------------------|---------|-----------|--------------------------------------|-------------------------------------|---------------------------------------|
+| Logistická Regresia  | 81%     | 73%       | 55%                                  | 75%                                 | 63%                                   |
+| KNN                  | 83%     | 78.62%    | 63%                                  | 49%                                 | 2 * (0.63 * 0.49) / (0.63 + 0.49) * 100 ≈ 60% |
+| Rozhodovací Strom    | 83.9%   | 71.9%     | 48%                                  | 83%                                 | 61%                                   |
+
+Celkovo najvyššiu accuracy a precision dosiahol model KNN. Napriek tomu však výrazne zaostáva v hodnote F1 score, ktoré kombinuje hodnoty recalla a precision. Tento parameter považujeme za dôležitý, keďže je naším cieľom správne predikovať populárne skladby ako populárne. Preto za najvhodnejšie modely považujeme logistickú regresiu a rozhodovací strom, keďže rozdiely medzi nimi sú veľmi malé. Celkovo ich hodnotíme ako dobré, vyše 70 % skladieb dokážu správne klasifikovať.
+
+### Výhody:
+- Jednoduchá interpretácia
+- Pomerne vysoká presnosť
+
+### Nevýhody:
+- Zjednodušovanie problému (strata informácií)
 
 
