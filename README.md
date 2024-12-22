@@ -74,3 +74,69 @@ Aby sme mohli porovnať náš model s inými prístupmi, rozhodli sme sa použi�
 
 Zaviedli sme toleranciu ±5, v rámci ktorej považujeme predikciu za správnu. Aj napriek tejto tolerancii sme dosiahli len **25,7 % presnosti**, čo nie je uspokojivý výsledok. Preto sme sa rozhodli zmeniť prístup a zamerať sa na klasifikáciu.
 
+##Logisticka Regresia
+
+Cieľom je vytvoriť model, ktorý dokáže spoľahlivo rozlíšiť medzi populárnymi a menej populárnymi piesňami. Pieseň definujeme ako populárnu, ak jej kvantilová hodnota dosahuje alebo prekračuje 75 %. Túto informáciu reprezentujeme binárnou premennou `popularity_bin`, kde:
+- **1** označuje populárnu pieseň
+- **0** označuje menej populárnu pieseň.
+
+Na základe širokého spektra hudobných atribútov, ako sú tanečnosť, energia a akustickosť, sme zvolili logistickú regresiu ako vhodný nástroj pre túto binárnu klasifikáciu. Logistická regresia umožňuje odhadnúť pravdepodobnosť, že daná pieseň patrí do kategórie populárnych.
+
+---
+
+### Úprava dát
+Pôvodný dataset bol značne nevyvážený v prospech triedy menej populárnych piesní. Aby sme zabránili zaujatosti modelu, použili sme techniku **SMOTE (Synthetic Minority Oversampling Technique)**. Táto metóda synteticky generuje nové príklady pre menšinovú triedu na základe existujúcich dát, čím sme zabezpečili rovnomerné zastúpenie oboch tried.
+
+---
+
+### Výsledky modelu
+
+| Metrika       | Hodnota  |
+|---------------|----------|
+| **Presnosť**  | 73 %     |
+| **Precision** | 55 %     |
+| **Recall**    | 75 %     |
+| **F1-score**  | 63 %     |
+
+Model dosiahol prijateľnú celkovú presnosť (73 %), avšak detailnejšia analýza odhalila rozdiely vo výkone medzi jednotlivými triedami.
+
+### Výkonnosť podľa tried
+
+#### Trieda 0: Menej populárne piesne
+- **Precision**: Vysoká, čo znamená, že väčšina piesní označených ako „menej populárne“ je správna.
+- **Recall**: 72 %, čo ukazuje, že model správne identifikuje väčšinu menej populárnych piesní.
+
+#### Trieda 1: Populárne piesne
+- **Precision**: 55 %, teda niečo vyše polovice piesní označených ako „populárne“ je skutočne populárnych.
+- **Recall**: 75 %, čo znamená, že model dokáže identifikovať väčšinu populárnych piesní.
+
+---
+
+## Matica zámien (Confusion Matrix)
+
+|                 | Predikované menej populárne | Predikované populárne |
+|-----------------|-----------------------------|-----------------------|
+| **Menej populárne** | 2907 (True Negatives)     | 1113 (False Positives) |
+| **Populárne**      | 467 (False Negatives)      | 1370 (True Positives)  |
+
+---
+
+### ROC krivka a AUC
+**ROC krivka** graficky zobrazuje vzťah medzi True Positive Rate (Recall) a False Positive Rate pri rôznych prahových hodnotách klasifikácie.
+
+- **AUC (plocha pod krivkou):** 0.81  
+  Táto hodnota naznačuje veľmi dobrý výkon modelu pri rozlišovaní medzi populárnymi a menej populárnymi skladbami.
+
+---
+
+### Precision-Recall krivka
+**Precision-Recall krivka** ukazuje vzťah medzi presnosťou (precision) a úplnosťou (recall) pri rôznych prahoch klasifikácie.
+
+- Na začiatku krivky, keď je recall nízky, model dosahuje veľmi vysokú presnosť. Znamená to, že model je v tomto režime opatrný a označuje za populárne iba piesne, o ktorých je veľmi presvedčený.
+- So zvyšovaním recall (snaha identifikovať viac populárnych piesní) dochádza k poklesu presnosti, pretože model začne nesprávne označovať niektoré piesne ako populárne.
+- **Priemerná presnosť (AP):** 0.60, čo naznačuje uspokojivý, ale nie výnimočný výkon modelu.
+
+---
+
+Výsledky modelu logistickej regresie s **ROC-AUC 0.81** a presnosťou **73 %** naznačujú solídny výkon, najmä pri klasifikácii menej populárnych piesní. Model dokáže identifikovať väčšinu populárnych piesní (vysoký recall), avšak nižšia presnosť naznačuje určité problémy pri správnom určení populárnych skladieb.
+
