@@ -74,7 +74,7 @@ Aby sme mohli porovnať náš model s inými prístupmi, rozhodli sme sa použi�
 
 Zaviedli sme toleranciu ±5, v rámci ktorej považujeme predikciu za správnu. Aj napriek tejto tolerancii sme dosiahli len **25,7 % presnosti**, čo nie je uspokojivý výsledok. Preto sme sa rozhodli zmeniť prístup a zamerať sa na klasifikáciu.
 
-##Logisticka Regresia
+## Logisticka Regresia
 
 Cieľom je vytvoriť model, ktorý dokáže spoľahlivo rozlíšiť medzi populárnymi a menej populárnymi piesňami. Pieseň definujeme ako populárnu, ak jej kvantilová hodnota dosahuje alebo prekračuje 75 %. Túto informáciu reprezentujeme binárnou premennou `popularity_bin`, kde:
 - **1** označuje populárnu pieseň
@@ -116,17 +116,18 @@ Model dosiahol prijateľnú celkovú presnosť (73 %), avšak detailnejšia anal
 
 |                 | Predikované menej populárne | Predikované populárne |
 |-----------------|-----------------------------|-----------------------|
-| **Menej populárne** | 2907 (True Negatives)     | 1113 (False Positives) |
+| **Nepopulárne** | 2907 (True Negatives)     | 1113 (False Positives) |
 | **Populárne**      | 467 (False Negatives)      | 1370 (True Positives)  |
 
 ---
 
 ### ROC krivka a AUC
 **ROC krivka** graficky zobrazuje vzťah medzi True Positive Rate (Recall) a False Positive Rate pri rôznych prahových hodnotách klasifikácie.
+![Alt text](images/ROC_logregression.png)
 
 - **AUC (plocha pod krivkou):** 0.81  
   Táto hodnota naznačuje veľmi dobrý výkon modelu pri rozlišovaní medzi populárnymi a menej populárnymi skladbami.
-
+![Alt text](images/Recall_logregression.png)
 ---
 
 ### Precision-Recall krivka
