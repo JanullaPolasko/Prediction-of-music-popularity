@@ -36,7 +36,6 @@ Pre analýzu korelácií sme zvolili **Spearmanovu koreláciu**, ktorá lepšie 
 
 - **Popularity vs. Loudness** (ρ = 0.58)  
   Vidíme jasný pozitívny vzťah medzi hlasitosťou a popularitou. Skladby, ktoré sú hlasnejšie (hodnoty dB bližšie k 0), majú tendenciu byť populárnejšie
- ![Alt text](images/statistic.png)
 
 **2. Negatívne korelácie**
 
@@ -45,7 +44,8 @@ Pre analýzu korelácií sme zvolili **Spearmanovu koreláciu**, ktorá lepšie 
 
 - **Popularity vs. Acousticness** (ρ = -0.47)  
   Vysoká akustickosť je častejšie spojená s nižšou popularitou.
-
+  
+ ![Alt text](images/statistic.png)
 ---
 
 # Predikčné Modely
